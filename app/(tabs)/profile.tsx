@@ -1,5 +1,8 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Settings, CreditCard, Package, Heart, Bell, CircleHelp as HelpCircle, LogOut,LogIn } from 'lucide-react-native';
+import { Settings, CreditCard, Package, Heart, Bell, CircleHelp as HelpCircle, LogOut, LogIn } from 'lucide-react-native';
+import { router } from 'expo-router';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 
 const MENU_ITEMS = [
   { icon: Settings, label: 'Settings', color: '#4A90E2' },
@@ -11,8 +14,39 @@ const MENU_ITEMS = [
 ];
 
 export default function ProfileScreen() {
-  let login = false;
-  if(login){
+  const [login, setLogin] = useState(false);
+  const [userSession, setUserSession] = useState(null);
+
+  useEffect(() => {
+    const getUserSession = async () => {
+      try {
+        const user = await AsyncStorage.getItem("userSession");
+        if (user) {
+          setLogin(true);
+          setUserSession(JSON.parse(user));
+        }
+        console.log("User session:", user);
+      } catch (error) {
+        console.error("Sign-in error:", error.message);
+      }
+    };
+
+    getUserSession();
+  }, []); // ✅ Fix: Added dependency array to prevent infinite loops
+
+  // ✅ Handle Logout
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("userSession");
+      setLogin(false);
+      setUserSession(null);
+      router.push('/sign-up'); // Redirect to login screen
+    } catch (error) {
+      console.error("Logout error:", error.message);
+    }
+  };
+
+  if (login) {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.header}>
@@ -20,10 +54,10 @@ export default function ProfileScreen() {
             source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1000' }}
             style={styles.avatar}
           />
-          <Text style={styles.name}>John Doe</Text>
-          <Text style={styles.email}>john.doe@example.com</Text>
+          <Text style={styles.name}>{userSession?.displayName || "John Doe"}</Text>
+          <Text style={styles.email}>{userSession?.email}</Text>
         </View>
-  
+
         <View style={styles.menuContainer}>
           {MENU_ITEMS.map((item, index) => (
             <TouchableOpacity key={index} style={styles.menuItem}>
@@ -34,25 +68,24 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           ))}
         </View>
-  
-        <TouchableOpacity style={styles.logoutButton}>
+
+        {/* ✅ Logout Button Fixed */}
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <LogOut size={24} color="#FF385C" />
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
     );
-  }
-  else{
+  } else {
     return (
       <View style={styles.containerIn}>
-        <TouchableOpacity style={styles.logoutButton}>
-          <LogIn size={24} color="#38FF60FF" />
+        <TouchableOpacity style={styles.logoutButton} onPress={() => router.push('/sign-up')}>
+          <LogIn size={24} color="#38FF60" />
           <Text style={styles.logoutText}>Log In</Text>
         </TouchableOpacity>
       </View>
     );
   }
-  
 }
 
 const styles = StyleSheet.create({
@@ -61,12 +94,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   containerIn: {
-    display:"flex",
-    width:"100%",
-    height:"100%",
-    flexDirection:"column",
-    alignItems:"center",
-    justifyContent:"center",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: '#fff',
   },
   header: {

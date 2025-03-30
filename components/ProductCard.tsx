@@ -14,7 +14,7 @@ import {
 import { Product } from '@/store/useStore';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
+const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.2;
 
 interface ProductCardProps {
   product: Product;
@@ -33,8 +33,9 @@ export default function ProductCard({ product, onSwipeLeft, onSwipeRight }: Prod
     })
     .onEnd(() => {
       if (translateX.value > SWIPE_THRESHOLD) {
-        translateX.value = withSpring(SCREEN_WIDTH);
         runOnJS(onSwipeRight)();
+        translateX.value = withSpring(SCREEN_WIDTH);
+        
       } else if (translateX.value < -SWIPE_THRESHOLD) {
         translateX.value = withSpring(-SCREEN_WIDTH);
         runOnJS(onSwipeLeft)();
@@ -48,7 +49,7 @@ export default function ProductCard({ product, onSwipeLeft, onSwipeRight }: Prod
     const rotate = interpolate(
       translateX.value,
       [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      [-10, 0, 10]
+      [-20, 0, 20]
     );
 
     return {

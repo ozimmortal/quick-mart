@@ -55,15 +55,16 @@ export default function DiscoverScreen() {
   }
 
   const handleSwipeLeft = () => {
-    setCurrentIndex((prev) => Math.min(prev + 1, SAMPLE_PRODUCTS.length - 1));
+    setCurrentIndex((prev) => (prev + 1) % SAMPLE_PRODUCTS.length);
   };
-
+  
   const handleSwipeRight = () => {
     const product = SAMPLE_PRODUCTS[currentIndex];
     addToCart(product);
     addToFavorites(product);
-    setCurrentIndex((prev) => Math.min(prev + 1, SAMPLE_PRODUCTS.length - 1));
+    setCurrentIndex((prev) => (prev + 1) % SAMPLE_PRODUCTS.length);
   };
+  
 
   if (currentIndex >= SAMPLE_PRODUCTS.length) {
     return (
