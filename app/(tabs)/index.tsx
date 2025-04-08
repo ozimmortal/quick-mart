@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import Animated, { useSharedValue, withSpring, runOnJS } from 'react-native-reanimated';
-import { X, ShoppingCart } from 'lucide-react-native';
+import { X, ShoppingCart, Search } from 'lucide-react-native';
 import { ProductCard } from '../../components/ProductCard';
 import { useStore, type Product } from '@/store/useStore';
 import { db } from '@/firebaseConfig';
 import { collection, getDocs, limit, query } from 'firebase/firestore';
+import { router } from 'expo-router';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -28,6 +29,7 @@ export default function DiscoverScreen() {
           ...doc.data()
         })) as Product[];
         setProducts(fetchedProducts);
+
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -93,6 +95,7 @@ export default function DiscoverScreen() {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
         {/* Add your loading indicator here */}
+        <ActivityIndicator size="large" color="#FF4785" />
       </View>
     );
   }
@@ -101,6 +104,11 @@ export default function DiscoverScreen() {
 
   return (
     <View style={styles.container}>
+      <View  style={styles.search}>
+        <TouchableOpacity onPress={() => router.push('/search')}>
+          <Search size={32} color="#FF4785" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.cardsContainer}>
         {currentProduct && (
           <ProductCard
@@ -134,6 +142,22 @@ export default function DiscoverScreen() {
 }
 
 const styles = StyleSheet.create({
+  search:{
+    top:30,
+    right:15,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    padding:10,
+    position:'absolute',
+    gap: 10,
+    zIndex:1000,
+    boxShadow:'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px',
+    borderRadius:'100%',
+  },
+  searchbtn:{
+    width:'100%',
+  },
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
@@ -146,6 +170,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:20,
   },
   buttonsContainer: {
     flexDirection: 'row',
