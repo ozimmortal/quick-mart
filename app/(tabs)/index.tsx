@@ -1,98 +1,133 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity,Pressable } from 'react-native';
-import { useFonts, Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
-import { SplashScreen, useRouter } from 'expo-router';
-import { Search } from 'lucide-react-native';
-import ProductCard from '@/components/ProductCard';
-import { useStore, Product } from '@/store/useStore';
+import { useState, useEffect, useCallback } from 'react';
+import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import Animated, { useSharedValue, withSpring, runOnJS } from 'react-native-reanimated';
+import { X, ShoppingCart } from 'lucide-react-native';
+import { ProductCard } from '../../components/ProductCard';
+import { useStore, type Product } from '@/store/useStore';
+import { db } from '@/firebaseConfig';
+import { collection, getDocs, limit, query } from 'firebase/firestore';
 
-// Prevent splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync();
-
-const SAMPLE_PRODUCTS: Product[] = [
-  {
-    id: '1',
-    name: 'Modern Lounge Chair',
-    price: 299.99,
-    description: 'Elegant mid-century modern design with premium comfort',
-    image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=1000',
-  },
-  {
-    id: '2',
-    name: 'Minimalist Desk Lamp',
-    price: 79.99,
-    description: 'Adjustable LED lamp with sleek aluminum finish',
-    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&q=80&w=1000',
-  },
-  {
-    id: '3',
-    name: 'Ceramic Plant Pot',
-    price: 34.99,
-    description: 'Hand-crafted ceramic pot with drainage system',
-    image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&q=80&w=1000',
-  },
-];
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function DiscoverScreen() {
-  const router = useRouter();
-  const [fontsLoaded, fontError] = useFonts({
-    'Inter-Regular': Inter_400Regular,
-    'Inter-Medium': Inter_500Medium,
-    'Inter-Bold': Inter_700Bold,
-  });
+  const translateX = useSharedValue(0);
+  const { addItem } = useStore();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const { addToCart, addToFavorites } = useStore();
-
+  // Fetch products from Firebase
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+    const fetchProducts = async () => {
+      try {
+        const shoeCollection = collection(db, "shoedb");
+        const q = query(shoeCollection, limit(10));
+        const querySnapshot = await getDocs(q);
+        const fetchedProducts = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Product[];
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
 
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+    fetchProducts();
+  }, []);
 
-  const handleSwipeLeft = () => {
-    setCurrentIndex((prev) => (prev + 1) % SAMPLE_PRODUCTS.length);
-  };
-  
-  const handleSwipeRight = () => {
-    const product = SAMPLE_PRODUCTS[currentIndex];
-    addToCart(product);
-    addToFavorites(product);
-    setCurrentIndex((prev) => (prev + 1) % SAMPLE_PRODUCTS.length);
-  };
-  
+  // Reset animation state when product changes
+  useEffect(() => {
+    translateX.value = 0;
+  }, [currentProductIndex]);
 
-  if (currentIndex >= SAMPLE_PRODUCTS.length) {
+  const moveToNextProduct = useCallback(() => {
+    setCurrentProductIndex(prev => {
+      // Loop back to first product when reaching the end
+      return prev >= products.length - 1 ? 0 : prev + 1;
+    });
+  }, [products.length]);
+
+  const handleAddToCart = useCallback(() => {
+    if (isAnimating || products.length === 0) return;
+    
+    setIsAnimating(true);
+    const productToAdd = products[currentProductIndex];
+    
+    translateX.value = withSpring(
+      SCREEN_WIDTH,
+      {
+        damping: 20,
+        stiffness: 110,
+      },
+      (finished) => {
+        if (finished) {
+          runOnJS(addItem)(productToAdd);
+          runOnJS(moveToNextProduct)();
+          runOnJS(setIsAnimating)(false);
+        }
+      }
+    );
+  }, [currentProductIndex, products, isAnimating, addItem, moveToNextProduct]);
+
+  const handleSkipProduct = useCallback(() => {
+    if (isAnimating || products.length === 0) return;
+    
+    setIsAnimating(true);
+    translateX.value = withSpring(
+      -SCREEN_WIDTH,
+      {
+        damping: 15,
+        stiffness: 100,
+      },
+      (finished) => {
+        if (finished) {
+          runOnJS(moveToNextProduct)();
+          runOnJS(setIsAnimating)(false);
+        }
+      }
+    );
+  }, [isAnimating, moveToNextProduct]);
+
+  if (products.length === 0) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.endText}>No more products to show!</Text>
+      <View style={[styles.container, styles.loadingContainer]}>
+        {/* Add your loading indicator here */}
       </View>
     );
   }
 
+  const currentProduct = products[currentProductIndex];
+
   return (
     <View style={styles.container}>
-      <Pressable 
-        style={styles.searchButton}
-        onPressIn={() => {
-          router.push('./search') 
-          console.log('Search button pressed!');}}
-      >
-        <Search size={24} color="#666" />
-      </Pressable>
-      <ProductCard
-        product={SAMPLE_PRODUCTS[currentIndex]}
-        onSwipeLeft={handleSwipeLeft}
-        onSwipeRight={handleSwipeRight}
-      />
-      <View style={styles.instructions}>
-        <Text style={styles.instructionText}>
-          Swipe right to add to cart, left to skip
-        </Text>
+      <View style={styles.cardsContainer}>
+        {currentProduct && (
+          <ProductCard
+            key={`product_${currentProduct.id}`}
+            product={currentProduct}
+            translateX={translateX}
+            index={currentProductIndex}
+          />
+        )}
+      </View>
+
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.skipButton]}
+          onPress={handleSkipProduct}
+          disabled={isAnimating}
+        >
+          <X size={32} color="#FF4785" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.likeButton]}
+          onPress={handleAddToCart}
+          disabled={isAnimating}
+        >
+          <ShoppingCart size={32} color="#ffffff" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -101,18 +136,28 @@ export default function DiscoverScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8f8f8',
+  },
+  loadingContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  searchButton: {
-    position: 'absolute',
-    top: 60,
-    right: 20,
-    width: 44,
-    height: 44,
-    backgroundColor: 'white',
-    borderRadius: 22,
+  cardsContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 40,
+    gap: 20,
+  },
+  button: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -120,26 +165,14 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    zIndex: 10,
   },
-  instructions: {
-    position: 'absolute',
-    bottom: 100,
-    padding: 20,
+  skipButton: {
+    backgroundColor: '#ffffff',
   },
-  instructionText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    fontFamily: 'Inter-Regular',
-  },
-  endText: {
-    fontSize: 20,
-    color: '#666',
-    textAlign: 'center',
-    fontFamily: 'Inter-Medium',
+  likeButton: {
+    backgroundColor: '#FF4785',
   },
 });

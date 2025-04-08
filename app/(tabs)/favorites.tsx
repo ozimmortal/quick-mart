@@ -3,7 +3,7 @@ import { useStore } from '@/store/useStore';
 import { Heart } from 'lucide-react-native';
 
 export default function FavoritesScreen() {
-  const { favorites, removeFromFavorites, addToCart } = useStore();
+  const { favorites, removeFavorite, addItem } = useStore();
 
   return (
     <View style={styles.container}>
@@ -19,12 +19,12 @@ export default function FavoritesScreen() {
               <Text style={styles.itemPrice}>${item.price}</Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                  onPress={() => addToCart(item)}
+                  onPress={() => addItem(item)}
                   style={styles.addToCartButton}>
                   <Text style={styles.buttonText}>Add to Cart</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => removeFromFavorites(item.id)}
+                  onPress={() => removeFavorite(item.id)}
                   style={styles.removeButton}>
                   <Heart size={24} color="#FF385C" fill="#FF385C" />
                 </TouchableOpacity>

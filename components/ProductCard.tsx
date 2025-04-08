@@ -1,91 +1,84 @@
-import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Text, Dimensions, TouchableOpacity } from 'react-native';
 import Animated, {
   useAnimatedStyle,
-  useSharedValue,
-  withSpring,
   interpolate,
-  runOnJS,
+  Extrapolation,
 } from 'react-native-reanimated';
-import {
-  GestureDetector,
-  Gesture,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler';
-import { Product } from '@/store/useStore';
+import type { Product } from '@/store/useStore';
+import { Heart } from 'lucide-react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.2;
+const CARD_WIDTH = SCREEN_WIDTH * 0.9;
 
 interface ProductCardProps {
   product: Product;
-  onSwipeLeft: () => void;
-  onSwipeRight: () => void;
+  translateX: Animated.SharedValue<number>;
+  index: number;
 }
 
-export default function ProductCard({ product, onSwipeLeft, onSwipeRight }: ProductCardProps) {
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
+export function ProductCard({ product, translateX, index }: ProductCardProps) {
+  const cardStyle = useAnimatedStyle(() => {
+    const rotation = interpolate(
+      translateX.value,
+      [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
+      [-30, 0, 30],
+      Extrapolation.CLAMP
+    );
 
-  const gesture = Gesture.Pan()
-    .onUpdate((event) => {
-      translateX.value = event.translationX;
-      translateY.value = event.translationY;
-    })
-    .onEnd(() => {
-      if (translateX.value > SWIPE_THRESHOLD) {
-        runOnJS(onSwipeRight)();
-        translateX.value = withSpring(SCREEN_WIDTH);
-        
-      } else if (translateX.value < -SWIPE_THRESHOLD) {
-        translateX.value = withSpring(-SCREEN_WIDTH);
-        runOnJS(onSwipeLeft)();
-      } else {
-        translateX.value = withSpring(0);
-        translateY.value = withSpring(0);
-      }
-    });
+    const scale = interpolate(
+      translateX.value,
+      [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
+      [0.8, 1, 0.8],
+      Extrapolation.CLAMP
+    );
 
-  const rStyle = useAnimatedStyle(() => {
-    const rotate = interpolate(
+    const opacity = interpolate(
       translateX.value,
       [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      [-20, 0, 20]
+      [0.5, 1, 0.5],
+      Extrapolation.CLAMP
     );
 
     return {
       transform: [
         { translateX: translateX.value },
-        { translateY: translateY.value },
-        { rotate: `${rotate}deg` },
+        { rotate: `${rotation}deg` },
+        { scale },
       ],
+      opacity,
     };
   });
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[styles.card, rStyle]}>
-          <Image source={{ uri: product.image }} style={styles.image} />
-          <View style={styles.content}>
-            <Text style={styles.name}>{product.name}</Text>
-            <Text style={styles.price}>${product.price}</Text>
-            <Text style={styles.description}>{product.description}</Text>
-          </View>
-        </Animated.View>
-      </GestureDetector>
-    </GestureHandlerRootView>
+    <Animated.View style={[styles.card, cardStyle]}>
+      <Image source={{ uri: product.image }} style={styles.image} />
+      <View style={styles.content}>
+        <View style={styles.heart}>
+          <Text style={styles.name}>{product.name}</Text>
+          <TouchableOpacity>
+            <Heart size={35} color="#FF385C" fill="white" />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.price}>${product.price}</Text>
+        <Text style={styles.description} numberOfLines={2}>
+          {product.description}
+        </Text>
+      </View>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  heart:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingLeft: 10,
+    
   },
   card: {
-    width: SCREEN_WIDTH * 0.9,
-    height: SCREEN_WIDTH * 1.2,
+    width: CARD_WIDTH,
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -96,29 +89,32 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    overflow: 'hidden',
+    position: 'absolute',
   },
   image: {
     width: '100%',
-    height: '60%',
-    resizeMode: 'cover',
+    height: 300,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   content: {
     padding: 20,
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginBottom: 8,
+    textAlign:'left'
   },
   price: {
     fontSize: 20,
-    color: '#FF385C',
+    color: '#FF4785',
+    fontWeight: '600',
     marginBottom: 8,
   },
   description: {
     fontSize: 16,
-    color: '#666',
+    color: '#666666',
     lineHeight: 24,
   },
 });

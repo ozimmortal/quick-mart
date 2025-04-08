@@ -45,7 +45,7 @@ const ALL_PRODUCTS: Product[] = [
 export default function SearchScreen() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const { addToCart } = useStore();
+  const { addItem } = useStore();
 
   const filteredProducts = ALL_PRODUCTS.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -81,7 +81,7 @@ export default function SearchScreen() {
               </Text>
               <TouchableOpacity
                 style={styles.addToCartButton}
-                onPress={() => addToCart(item)}
+                onPress={() => addItem(item)}
               >
                 <ShoppingBag size={20} color="#fff" />
                 <Text style={styles.buttonText}>Add to Cart</Text>

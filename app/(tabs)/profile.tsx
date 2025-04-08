@@ -6,10 +6,7 @@ import { useEffect, useState } from "react";
 
 const MENU_ITEMS = [
   { icon: Settings, label: 'Settings', color: '#4A90E2' },
-  { icon: CreditCard, label: 'Payment Methods', color: '#50C878' },
   { icon: Package, label: 'Orders', color: '#FF8C00' },
-  { icon: Heart, label: 'Wishlist', color: '#FF385C' },
-  { icon: Bell, label: 'Notifications', color: '#9B59B6' },
   { icon: HelpCircle, label: 'Help & Support', color: '#34495E' },
 ];
 

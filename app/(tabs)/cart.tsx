@@ -1,17 +1,17 @@
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useStore } from '@/store/useStore';
-import { Trash2 } from 'lucide-react-native';
+import { X } from 'lucide-react-native';
 
 export default function CartScreen() {
-  const { cart, removeFromCart } = useStore();
+  const { items, removeItem } = useStore();
 
-  const total = cart.reduce((sum: number, item: { price: number; quantity: number }) => sum + item.price * item.quantity, 0);
+  const total = items.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Shopping Cart</Text>
       <FlatList
-        data={cart}
+        data={items}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.cartItem}>
@@ -19,26 +19,19 @@ export default function CartScreen() {
             <View style={styles.itemDetails}>
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemPrice}>${item.price}</Text>
-              <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
             </View>
             <TouchableOpacity
-              onPress={() => removeFromCart(item.id)}
-              style={styles.removeButton}>
-              <Trash2 size={24} color="#FF385C" />
+              onPress={() => removeItem(item.id)}
+              style={styles.removeButton}
+            >
+              <X size={20} color="#FF4785" />
             </TouchableOpacity>
           </View>
         )}
-        ListEmptyComponent={
-          <View style={styles.emptyCart}>
-            <Text style={styles.emptyText}>Your cart is empty</Text>
-          </View>
-        }
       />
-      <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total: ${total.toFixed(2)}</Text>
-        <TouchableOpacity
-          style={[styles.checkoutButton, { opacity: cart.length ? 1 : 0.5 }]}
-          disabled={!cart.length}>
+      <View style={styles.footer}>
+        <Text style={styles.total}>Total: ${total.toFixed(2)}</Text>
+        <TouchableOpacity style={styles.checkoutButton}>
           <Text style={styles.checkoutText}>Checkout</Text>
         </TouchableOpacity>
       </View>
@@ -49,12 +42,12 @@ export default function CartScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     paddingTop: 60,
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginBottom: 20,
     paddingHorizontal: 20,
   },
@@ -62,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#f1f1f1',
     alignItems: 'center',
   },
   itemImage: {
@@ -76,49 +69,35 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
+    marginBottom: 5,
   },
   itemPrice: {
     fontSize: 16,
-    color: '#FF385C',
-    marginTop: 4,
-  },
-  itemQuantity: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
+    color: '#FF4785',
+    fontWeight: '600',
   },
   removeButton: {
     padding: 10,
   },
-  emptyCart: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 40,
-  },
-  emptyText: {
-    fontSize: 18,
-    color: '#666',
-  },
-  totalContainer: {
+  footer: {
     padding: 20,
     borderTopWidth: 1,
-    borderTopColor: '#eee',
+    borderTopColor: '#f1f1f1',
   },
-  totalText: {
+  total: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginBottom: 15,
   },
   checkoutButton: {
-    backgroundColor: '#FF385C',
+    backgroundColor: '#FF4785',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
   },
   checkoutText: {
-    color: '#fff',
+    color: 'white',
     fontSize: 18,
     fontWeight: '600',
   },

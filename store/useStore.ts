@@ -4,50 +4,33 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  description: string;
   image: string;
+  description: string;
 }
 
-interface CartItem extends Product {
-  quantity: number;
-}
-
-interface StoreState {
-  cart: CartItem[];
+interface CartStore {
+  items: Product[];
   favorites: Product[];
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: string) => void;
-  addToFavorites: (product: Product) => void;
-  removeFromFavorites: (productId: string) => void;
+  addItem: (product: Product) => void;
+  removeItem: (productId: string) => void;
+  removeFavorite: (productId: string) => void;
+  clearCart: () => void;
 }
 
-export const useStore = create<StoreState>((set) => ({
-  cart: [],
+export const useStore = create<CartStore>((set) => ({
+  items: [],
   favorites: [],
-  addToCart: (product) =>
-    set((state) => {
-      const existingItem = state.cart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return {
-          cart: state.cart.map((item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
-        };
-      }
-      return { cart: [...state.cart, { ...product, quantity: 1 }] };
-    }),
-  removeFromCart: (productId) =>
+  addItem: (product) =>
     set((state) => ({
-      cart: state.cart.filter((item) => item.id !== productId),
+      items: [...state.items, product],
     })),
-  addToFavorites: (product) =>
+  removeItem: (productId) =>
     set((state) => ({
-      favorites: [...state.favorites, product],
+      items: state.items.filter((item) => item.id !== productId),
     })),
-  removeFromFavorites: (productId) =>
-    set((state) => ({
-      favorites: state.favorites.filter((item) => item.id !== productId),
-    })),
+    removeFavorite: (productId) =>(
+      set((state) => ({
+        favorites: state.favorites.filter((item) => item.id !== productId),
+    }))),
+  clearCart: () => set({ items: [] }),
 }));
