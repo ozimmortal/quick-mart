@@ -24,7 +24,7 @@ export default function ProfileScreen() {
         }
         console.log("User session:", user);
       } catch (error) {
-        console.error("Sign-in error:", error.message);
+        console.error("Sign-in error:", error?.message );
       }
     };
 
@@ -39,7 +39,7 @@ export default function ProfileScreen() {
       setUserSession(null);
       router.push('/sign-up'); // Redirect to login screen
     } catch (error) {
-      console.error("Logout error:", error.message);
+      console.error("Logout error:", error?.message);
     }
   };
 
