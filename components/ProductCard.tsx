@@ -6,6 +6,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { Product } from '@/store/useStore';
 import { Heart } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = SCREEN_WIDTH * 0.9;
@@ -51,7 +52,11 @@ export function ProductCard({ product, translateX, index }: ProductCardProps) {
 
   return (
     <Animated.View style={[styles.card, cardStyle]}>
+      <TouchableOpacity onPress={()=>{
+        router.push(`./details/${product.id}`)
+      }}>
       <Image source={{ uri: product.image }} style={styles.image} />
+      </TouchableOpacity>
       <View style={styles.content}>
         <View style={styles.heart}>
           <Text style={styles.name}>{product.name}</Text>

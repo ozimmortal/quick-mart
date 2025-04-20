@@ -14,7 +14,7 @@ export default function SearchScreen() {
   const [error, setError] = useState<string | null>(null);
   const { addItem } = useStore();
 
-  // Fetch shoes from Firestore
+ 
   useEffect(() => {
     const fetchShoes = async () => {
       try {
@@ -45,12 +45,12 @@ export default function SearchScreen() {
     return shoeProducts.filter(product =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()))
-    ).slice(0, 5); // Limit to 5 suggestions
+    ).slice(0, 5); 
   }, [searchQuery, shoeProducts]);
 
   const handleSelectProduct = (product: Product) => {
-    addItem(product);
-    router.push(`/product/${product.id}`);
+    
+    router.push(`./details/${product.id}`);
   };
 
   if (loading) {
@@ -99,9 +99,9 @@ export default function SearchScreen() {
       {searchQuery ? (
         <ScrollView style={styles.suggestionsContainer}>
           {suggestions.length > 0 ? (
-            suggestions.map((product) => (
+            suggestions.map((product,i) => (
               <TouchableOpacity
-                key={product.id}
+                key={product.id + String(i)}
                 style={styles.suggestionItem}
                 onPress={() => handleSelectProduct(product)}
               >
