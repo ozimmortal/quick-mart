@@ -4,20 +4,12 @@ import { X } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 export default function CartScreen() {
-  const { items, removeItem,clearCart,addOrders } = useStore();
-
-  const total = items.reduce((sum, item) => sum + item.price, 0);
-  const handleCheckout = () => {
-    addOrders(items);
-    clearCart();
-    router.push('../conformation');
-  };
-
+  const { orders,addOrders } = useStore();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Shopping Cart</Text>
+      <Text style={styles.title}>Order History</Text>
       <FlatList
-        data={items}
+        data={orders}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.cartItem}>
@@ -26,21 +18,9 @@ export default function CartScreen() {
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemPrice}>${item.price}</Text>
             </View>
-            <TouchableOpacity
-              onPress={() => removeItem(item.id)}
-              style={styles.removeButton}
-            >
-              <X size={20} color="#FF4785" />
-            </TouchableOpacity>
           </View>
         )}
       />
-      <View style={styles.footer}>
-        <Text style={styles.total}>Total: ${total.toFixed(2)}</Text>
-        <TouchableOpacity style={styles.checkoutButton}  onPress={handleCheckout}>
-          <Text style={styles.checkoutText}>Checkout</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }

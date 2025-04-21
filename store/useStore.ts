@@ -10,8 +10,10 @@ export interface Product {
 
 interface CartStore {
   items: Product[];
+  orders: Product[];
   favorites: Product[];
   addItem: (product: Product) => void;
+  addOrders: (product:Product[]) => void;
   removeItem: (productId: string) => void;
   removeFavorite: (productId: string) => void;
   clearCart: () => void;
@@ -20,6 +22,10 @@ interface CartStore {
 export const useStore = create<CartStore>((set) => ({
   items: [],
   favorites: [],
+  orders: [],
+  addOrders: (product:Product[]) => set((state) => ({
+    orders: [...state.orders, ...product],
+  })),
   addItem: (product) =>
     set((state) => ({
       items: [...state.items, product],
@@ -32,5 +38,7 @@ export const useStore = create<CartStore>((set) => ({
       set((state) => ({
         favorites: state.favorites.filter((item) => item.id !== productId),
     }))),
-  clearCart: () => set({ items: [] }),
+  clearCart: () =>{
+    set({ items: [] })
+  },
 }));

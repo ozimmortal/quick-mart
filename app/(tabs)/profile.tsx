@@ -5,9 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 
 const MENU_ITEMS = [
-  { icon: Settings, label: 'Settings', color: '#4A90E2' },
-  { icon: Package, label: 'Orders', color: '#FF8C00' },
-  { icon: HelpCircle, label: 'Help & Support', color: '#34495E' },
+  { icon: Settings, label: 'Settings', color: '#4A90E2',url:'../settings' },
+  { icon: Package, label: 'Orders', color: '#FF8C00', url:'../orders'},
+  { icon: HelpCircle, label: 'Help & Support', color: '#34495E', url:'../help' },
 ];
 
 export default function ProfileScreen() {
@@ -51,13 +51,13 @@ export default function ProfileScreen() {
             source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1000' }}
             style={styles.avatar}
           />
-          <Text style={styles.name}>{userSession?.displayName || "John Doe"}</Text>
+          <Text style={styles.name}>{userSession?.displayName  || "John Doe"}</Text>
           <Text style={styles.email}>{userSession?.email}</Text>
         </View>
 
         <View style={styles.menuContainer}>
           {MENU_ITEMS.map((item, index) => (
-            <TouchableOpacity key={index} style={styles.menuItem}>
+            <TouchableOpacity key={index} style={styles.menuItem} onPress={() => router.push(item.url)}>
               <View style={[styles.iconContainer, { backgroundColor: `${item.color}15` }]}>
                 <item.icon size={24} color={item.color} />
               </View>
