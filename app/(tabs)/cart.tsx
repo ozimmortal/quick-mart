@@ -1,11 +1,15 @@
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useStore } from '@/store/useStore';
 import { X } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 export default function CartScreen() {
   const { items, removeItem } = useStore();
 
   const total = items.reduce((sum, item) => sum + item.price, 0);
+  const handleCheckout = () => {
+    router.push('../conformation');
+  };
 
   return (
     <View style={styles.container}>
@@ -31,7 +35,7 @@ export default function CartScreen() {
       />
       <View style={styles.footer}>
         <Text style={styles.total}>Total: ${total.toFixed(2)}</Text>
-        <TouchableOpacity style={styles.checkoutButton}>
+        <TouchableOpacity style={styles.checkoutButton}  onPress={handleCheckout}>
           <Text style={styles.checkoutText}>Checkout</Text>
         </TouchableOpacity>
       </View>
