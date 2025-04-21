@@ -14,6 +14,7 @@ interface CartStore {
   favorites: Product[];
   addItem: (product: Product) => void;
   addOrders: (product:Product[]) => void;
+  addFavorite: (product: Product) => void;
   removeItem: (productId: string) => void;
   removeFavorite: (productId: string) => void;
   clearCart: () => void;
@@ -26,6 +27,10 @@ export const useStore = create<CartStore>((set) => ({
   addOrders: (product:Product[]) => set((state) => ({
     orders: [...state.orders, ...product],
   })),
+  addFavorite: (product) =>
+    set((state) => ({
+      favorites: [...state.favorites, product],
+    })),
   addItem: (product) =>
     set((state) => ({
       items: [...state.items, product],
