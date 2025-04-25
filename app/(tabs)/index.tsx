@@ -8,6 +8,7 @@ import { db } from '@/firebaseConfig';
 import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { router } from 'expo-router';
 
+
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function DiscoverScreen() {
