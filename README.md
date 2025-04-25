@@ -13,7 +13,7 @@
    pnpm install
    ```
 
-.3 Start the app
+3. Start the app
 
    ```bash
     pnpm expo start
