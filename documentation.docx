@@ -7,12 +7,16 @@ End-to-end, from discovery to checkout, Quick Mart offers convenience, speed, an
 
 1.1 Purpose of Documentation 
 This is a comprehensive guide for developers, stakeholders, and users to understand the structure, operation, and development process of the Quick Mart mobile application. 
+
 1.1.1User Guides 
 Provides end-users with instructions on how to navigate and utilize the app features efficiently. 
+
 1.1.2Technical Specifications 
 Details the architecture, technology stack, and development practices used in building the application. 
+
 1.1.3Release Notes 
 Captures updates, bug fixes, and enhancements in different versions of the application. 
+
 1.2Key Features of Quick Mart 
 Discover shoes with swipe gestures
 Save favorites for later 
@@ -51,8 +55,10 @@ Lack of targeted apps focused on footwear
 Quick Mart addresses these issues through a minimalistic interface, intuitive gestures, and a product-specific approach. 
 
 2.4Feature Scope
- Includes swipe-based product discovery, favorites, cart management, and account creation, with future plans for payment and backend integration. 2.5 Target Audience with Characteristics and Needs
+ Includes swipe-based product discovery, favorites, cart management, and account creation, with future plans for payment and backend integration. 
+
+2.5 Target Audience with Characteristics and Needs
 Young adults aged 18–35
- Fashion-conscious mobile shoppers
- Require fast and easy navigation 
+Fashion-conscious mobile shoppers
+Require fast and easy navigation 
 Prioritize app responsiveness and visual design
