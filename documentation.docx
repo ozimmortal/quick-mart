@@ -1,6 +1,9 @@
 1.Introduction 
 
-Quick Mart is a mobile commerce app fully dedicated to shoes. With a minimalist, easy-to-use interface designed using Figma and developed using React Native, the app provides users with an effortless experience to browse, favorite, and purchase shoes. End-to-end, from discovery to checkout, Quick Mart offers convenience, speed, and modern looks in sync with mobile shoppers. 
+Quick Mart is a mobile commerce app fully dedicated to shoes. 
+With a minimalist, easy-to-use interface designed using Figma and developed using React Native, 
+the app provides users with an effortless experience to browse, favorite, and purchase shoes. 
+End-to-end, from discovery to checkout, Quick Mart offers convenience, speed, and modern looks in sync with mobile shoppers. 
 
 1.1 Purpose of Documentation 
 This is a comprehensive guide for developers, stakeholders, and users to understand the structure, operation, and development process of the Quick Mart mobile application. 
@@ -15,3 +18,41 @@ Discover shoes with swipe gestures
 Save favorites for later 
 Real-time cart and total amount view 
 User authentication and profile management 
+
+2.Project Overview 
+
+The Quick Mart application aims to provide a minimalist and user-friendly platform for purchasing shoes online. 
+The app features five core screens: 
+
+Loading Screen: Displays the app logo during startup. 
+Discover Page: Acting as the main page, 
+               the user can browse through available shoes, 
+               swipe to the right to add items into the cart, 
+               swipe to the left to take away, and 
+               search by the name of shoes. 
+Each product includes detailed information and the option to favorite it. 
+Favorites Page: A list of shoes saved by the user from the Discover page for later viewing. 
+Cart Page: Displays selected shoes with pricing and the total amount. 
+           From here, users can proceed to checkout. 
+Profile Page: Supports user authentication and displays account details. 
+              Logged-in users can access settings, order history, help & support, and log out. 
+              New users can create an account via email and password.
+ Quick Mart offers a familiar e-commerce flow while keeping the experience minimal and focused, particularly for mobile-first users who want fast and easy access to popular footwear. 
+
+2.1Problem Domain 
+The current digital shopping experience often lacks personalization, speed, or intuitive design for quick purchases. 
+
+2.2Current Market Issues and Problems 
+Overloaded interfaces on many e-commerce apps 
+Slow performance or poor navigation on mobile devices 
+Lack of targeted apps focused on footwear 
+
+2.3Potential of Quick Mart to Solve These Problems 
+Quick Mart addresses these issues through a minimalistic interface, intuitive gestures, and a product-specific approach. 
+
+2.4Feature Scope
+ Includes swipe-based product discovery, favorites, cart management, and account creation, with future plans for payment and backend integration. 2.5 Target Audience with Characteristics and Needs
+Young adults aged 18–35
+ Fashion-conscious mobile shoppers
+ Require fast and easy navigation 
+Prioritize app responsiveness and visual design
