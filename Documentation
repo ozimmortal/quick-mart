@@ -1,0 +1,25 @@
+1.Introduction 
+
+Quick Mart is a mobile commerce app fully dedicated to shoes. 
+With a minimalist, easy-to-use interface designed using Figma and developed using React Native, 
+the app provides users with an effortless experience to browse, favorite, and purchase shoes. 
+End-to-end, from discovery to checkout, Quick Mart offers convenience, speed, and modern looks in sync with mobile shoppers. 
+
+1.1 Purpose of Documentation 
+This is a comprehensive guide for developers, stakeholders, and users to understand the structure, operation, and development 
+process of the Quick Mart mobile application. 
+  
+1.1.1User Guides 
+Provides end-users with instructions on how to navigate and utilize the app features efficiently. 
+  
+1.1.2Technical Specifications 
+Details the architecture, technology stack, and development practices used in building the application. 
+  
+1.1.3Release Notes 
+Captures updates, bug fixes, and enhancements in different versions of the application.
+  
+1.2Key Features of Quick Mart 
+Discover shoes with swipe gestures
+Save favorites for later 
+Real-time cart and total amount view 
+User authentication and profile management 
