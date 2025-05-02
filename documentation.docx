@@ -253,3 +253,28 @@ Basic logic was created to calculate the total price and validate user authentic
 
 7.12 UI Styling
 Used StyleSheet in React Native and followed the design from Figma to ensure pixel-perfect implementation. Styles are modularized for easier theme updates in the future.
+
+8.Testing and Quality Assurance
+Testing and QA were included in the Quick Mart development process to ensure the app functioned consistently across devices, provided a smooth user experience, and appeared as intended.
+ 
+Unit Testing
+Focused on core functions like total price calculation and swipe gesture recognition.
+ Integration Testing
+Tested combined flows like login-then-checkout, discover-to-cart, etc.
+ 
+End to End (E2E) Testing
+Simulated user flows from opening the app to purchasing items.
+ 
+Performance Testing
+Measured load times and responsiveness across devices and OS versions.
+
+8.1 Reflection on Testing Effectiveness
+ Strengths
+Thorough testing across multiple devices
+Identified and fixed critical bugs during swiping and navigation
+
+ Challenges
+Lack of real back-end made session testing complex
+Manual testing required for most flows due to MVP
+Scope Restrictions and limitation of the app
+
