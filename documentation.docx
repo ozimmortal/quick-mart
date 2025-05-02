@@ -321,7 +321,16 @@ Focus on Shoes Only: The app is intentionally scoped to sell only shoes to maint
 Limited Checkout Flow: Payment gateway and shipping functionality are omitted in the MVP, simplifying development but limiting commercial use.
 Offline Functionality: The app currently does not support offline browsing or caching, which limits usability without internet access.
 
+Conclusion
 
+The Quick Mart mobile app properly depicts the design of a neat, effective, 
+and easy-to-use local shoe purchasing optimized e-commerce website. 
+Built using a mobile-first approach, it contains easy-to-use navigation, responsive UI/UX, and
+main features such as product discovery, favorites, cart management, and user authentication.
+Built using React Native and designed using Figma, the app emphasizes modular code structure, maintainability, and
+best shopping experience on both the Android and iOS platforms.
+The app succeeds in its fundamental mission: to offer a minimalist but thorough shopping experience with speed, simplicity, and usability as its highest priorities.
+Through iterative agile development and continuous testing, Quick Mart stands as a scalable foundation for future enhancements in mobile commerce.
 
 
 
