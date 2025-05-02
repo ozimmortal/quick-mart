@@ -62,3 +62,35 @@ Young adults aged 18–35
 Fashion-conscious mobile shoppers
 Require fast and easy navigation 
 Prioritize app responsiveness and visual design
+
+
+3. User Requirements
+
+3.1 Functional Requirements
+
+The following functional requirements define the key behaviors and features of the Quick Mart mobile application:
+User Registration and Login:Users must be able to create an account using email and password and log in securely.
+Product Browsing:Users can browse a catalog of shoes displayed on the Discover page.
+Swipe Actions on Discover Page:
+                                 Swiping right adds a shoe to the cart.
+                                  Swiping left dismisses the product.
+
+
+Product Search:Users can search for specific shoes by name.
+Add to Favorites:Users can favorite shoes from the Discover page for later viewing.
+View Favorites List:Users can see all favorited shoes on the Favorites page.
+Add to Cart and View Cart:Shoes added to the cart are displayed on the Cart page with individual and total prices.
+Checkout Process:Users can proceed to purchase shoes from the cart.If they are not logged in, they are asked to sign-up or log-in in advance.
+User-Profile Management:Logged-in users can view and edit their profile, e.g., their e-mail, profile picture, and preferences.
+Order History and Support:Users can view past orders and access help & support options.
+Logout Functionality:Users can log out from the profile page.
+
+3.2 Non-Functional Requirements
+The following requirements establish the app's quality and performance features:
+Usability:The UI must be minimal, clean, and user-friendly for people of all ages.
+Performance:App should load quickly with responsive transitions between screens.
+Compatibility:The app must function seamlessly on both Android and iOS devices.
+Security:User credentials must be securely stored, and sessions should be properly managed.
+Scalability:The backend architecture should allow future growth (e.g., more products, more users).
+
+Availability:The app should maintain high availability with minimal downtime during updates.
