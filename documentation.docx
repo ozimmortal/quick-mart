@@ -155,3 +155,35 @@ Quickly adapt to design and functionality feedback from early user interactions.
 Iteratively develop features such as gesture handling, navigation, and user account flows in manageable sprints.
 Foster collaboration between design and development teams, especially via Figma and Git version control usage.
 Launch an MVP quickly and iterate afterward based on actual user needs and market feedback.
+
+6. Technological Stack
+
+Quick Mart is built using a modern and scalable technology stack tailored for mobile-first development, rapid UI prototyping, and cross-platform deployment.
+
+6.1 Front-end
+
+React Native: Core framework for building cross-platform mobile applications.
+Figma: UI/UX design and prototyping tool.
+JavaScript / TypeScript: For writing clean, modular, and scalable application logic.
+React Navigation: For managing in-app navigation and routing.
+
+6.2 Backend (Optional/Future Enhancement)
+
+While the current implementation may use local state or mock APIs, future enhancements could include:
+Node.js + Express.js: Backend server for APIs and business logic.
+MongoDB / Firebase: Database solutions for storing product details, user accounts, cart data, etc.
+Firebase Authentication: Secure user registration and login system.
+
+6.3 Tools and Platforms
+
+Expo: For building, testing, and deploying React Native apps faster.
+Git & GitHub: For version control and collaboration.
+VS Code: Preferred code editor for development.
+Android Studio / Xcode: For platform-specific emulators and builds.
+This stack enables Quick Mart to operate efficiently on both Android and iOS, supports rapid UI updates, and is scalable for future backend integration and expansion.
+
+6.4 Dependencies
+
+react-native-gesture-handler: Swipe gesture implementation
+react-navigation: Navigation across screens
+expo: Build and deployment tool for React Native apps
