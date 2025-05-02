@@ -278,3 +278,50 @@ Lack of real back-end made session testing complex
 Manual testing required for most flows due to MVP
 Scope Restrictions and limitation of the app
 
+
+9.Future Enhancements
+To further enhance functionality, scalability, and user experience, the following improvements are proposed for future versions of Quick Mart:
+
+Back-end Integration: Implement a full backend using Node.js and MongoDB or Firebase for dynamic product data, user authentication, and persistent storage.
+Payment Gateway Integration: Enable secure online payment using services such as Stripe, Razorpay, or PayPal.
+Advanced Search & Filters: Provide filters (e.g., price range, brand, color, size) to restrict product discovery.
+Push Notifications: Notify users about offers, new arrivals, and cart reminders.
+User Reviews & Ratings: Allow users to review products and provide star ratings for better buyer decisions.
+Order Tracking: Enable real-time order status and delivery tracking within the profile.
+Admin Panel: Develop a web-based admin dashboard for product and order management.
+Multilingual Support: Expand accessibility by adding support for multiple languages and regions.
+
+9.1 Some of Future Integrations
+Real-time database with Firebase or MongoDB
+Online payment gateways (Stripe, Razorpay)
+Push notifications and order tracking
+
+
+9.2 Alignment with Project Objectives and User Needs
+These enhancements aim to strengthen Quick Mart’s value by improving usability, performance, and scalability, aligning with the needs of fast-paced mobile users and modern shopping expectations.
+
+9.3 Technical Restrictions
+Device Fragmentation: Variations in screen sizes and OS versions across Android and iOS devices required thorough cross-device testing.
+Gesture Consistency: Swipe gestures needed precise implementation using react-native-gesture-handler to avoid misfires or accidental actions.
+Navigation Stack Limits: Edge cases like back-navigation in deep navigation stacks required handling to prevent cras
+State Persistence: Without a full back-end, preserving state (cart, favorites) across sessions had technical limitations in the MVP version.
+
+9.4 Operational Restrictions
+No Backend Integration (MVP):
+Due to scope, real-time backend operations like order tracking, payment processing, and inventory management were not implemented.
+Manual Authentication Simulation: Login/logout flows are handled via mock logic, restricting real user validation or data persistence.
+Static Product Data: Shoe listings are statically defined in the app. Dynamic updates via a database are a planned enhancement.
+
+
+9.5 Strategic Restrictions
+Focus on Shoes Only: The app is intentionally scoped to sell only shoes to maintain brand clarity and UX simplicity.
+
+Limited Checkout Flow: Payment gateway and shipping functionality are omitted in the MVP, simplifying development but limiting commercial use.
+Offline Functionality: The app currently does not support offline browsing or caching, which limits usability without internet access.
+
+
+
+
+
+
+
