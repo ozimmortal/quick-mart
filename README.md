@@ -22,4 +22,5 @@
 
 https://github.com/user-attachments/assets/c878b202-8d46-4f17-aa4a-74a52b7135c7
 
+[mobile - app documentation.docx](https://github.com/user-attachments/files/20018277/mobile.-.app.documentation.docx)
 
