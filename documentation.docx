@@ -94,3 +94,28 @@ Compatibility:The app must function seamlessly on both Android and iOS devices.
 Security:User credentials must be securely stored, and sessions should be properly managed.
 Scalability:The backend architecture should allow future growth (e.g., more products, more users).
 Availability:The app should maintain high availability with minimal downtime during updates.
+
+
+4. Design Concepts
+The Quick Mart interface is built around a clean, minimalist, and very interactive user interface. It follows modern mobile UI/UX guidelines, with emphasis on clarity, ease of navigation, and efficiency in user interaction.
+
+4.1 UI Design
+The visual components are designed in Figma with a light color palette and bold, readable typography. The layout relies on a bottom tab navigation bar with four main icons: Discover, Favorites, Cart, and Profile. Each screen is spaced for touch-friendly navigation and is optimized for both small and large mobile screens.
+
+
+4.2 UX Flow
+On Launch: Users are presented with a loading screen displaying the app logo.
+Discover Flow: Users scroll or swipe through available shoes. Swiping left dismisses and swipes it out of the cart, and swiping right in pulls it into the cart.
+Search Flow: A search bar allows users to find specific shoes by name.
+Favorites Flow: Items marked as favorite are stored for future reference and accessible on a dedicated page.
+Cart and Checkout Flow: Multiple selected items are shown with individual and total prices. Checkout prompts authentication if the user isn't logged in.
+Authentication Flow: New users can create accounts with email and password, while returning users can log in. Once signed in, users can access their profile and settings.
+
+4.3 Responsiveness & Accessibility
+
+Responsive Layout: Components resize smoothly to fit various device sizes.
+Touch Optimization: Interactions and buttons are all optimized for tap accuracy and thumb reach.
+Accessible Fonts and Contrast: Offers readability and usability for people with visual impairments.
+This section guides the foundation of Quick Mart’s interface design and user experience decisions.
+
+
