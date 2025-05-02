@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   contactMethod: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fffffff',
     padding: 16,
     margin: 8,
     borderRadius: 12,
