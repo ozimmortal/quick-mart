@@ -104,6 +104,7 @@ The visual components are designed in Figma with a light color palette and bold,
 
 
 4.2 UX Flow
+
 On Launch: Users are presented with a loading screen displaying the app logo.
 Discover Flow: Users scroll or swipe through available shoes. Swiping left dismisses and swipes it out of the cart, and swiping right in pulls it into the cart.
 Search Flow: A search bar allows users to find specific shoes by name.
