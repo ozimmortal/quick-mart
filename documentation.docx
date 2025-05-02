@@ -187,3 +187,69 @@ This stack enables Quick Mart to operate efficiently on both Android and iOS, su
 react-native-gesture-handler: Swipe gesture implementation
 react-navigation: Navigation across screens
 expo: Build and deployment tool for React Native apps
+
+
+7.Implementation Details
+
+The implementation phase of Quick Mart was focused on translating Figma-based UI designs into fully functional, interactive screens using React Native. Each screen and feature was developed using a component-based approach, enabling reuse and maintainability.
+
+7.1 Key Features and Functionalities
+Discover, favorite, and cart flows
+Swipe gestures for product interactions
+User account creation and management
+
+7.2 Functionality of the App
+The app allows seamless shoe browsing, cart calculation, and checkout initiation with user authentication support.
+
+7.3 Essential Features of the App
+
+Search shoes by name
+Add/remove favorites
+Persistent user sessions (planned)
+
+7.4 Screens Developed
+
+Loading Screen: Displays logo animation during app start-up.
+
+
+Discover Screen: Includes card-based UI for shoe listings, swipe gestures, search input, and favorite icon toggle.
+
+
+Favorites Screen: Displays a list of shoes marked as favorites.
+
+
+Cart Screen: Summarizes selected items, quantity, total price, and checkout button.
+
+
+Profile Screen: Displays user profile, with conditional UI for logged-in vs new users.
+
+
+Authentication Screens: Includes sign-up and sign-in with form validation and Firebase integration.
+
+
+7.5 State Management
+React Context API: Used to manage cart items, favorites, and user session across the app.
+
+7.6 UI Libraries Used
+React Native Paper and React Native Elements: For pre-styled UI components.
+Lottie for React Native: For loading animations.
+
+7.7 Navigation
+Bottom Tab Navigation: Implemented using @react-navigation/bottom-tabs.
+Stack Navigation: Used for screen transitions during authentication and checkout.
+This phase ensured that all planned functionalities and interactions from the design stage were implemented with performance and usability in mind.
+
+7.8 State Management
+For MVP, React's built-in useState and useContext hooks were used for local state management. Future versions may integrate Redux or Context API for more complex state needs.
+
+7.9 Swipe and Gesture Handling
+The react-native-gesture-handler library enables smooth swiping functionality on the Discover screen, enhancing UX by allowing users to add to cart or dismiss shoes.
+
+7.10 Authentication
+Implemented using mock email/password logic with plans to upgrade to Firebase Authentication. Auth guards were added to restrict access to the cart and profile for unauthenticated users.
+
+7.11 Checkout Logic
+Basic logic was created to calculate the total price and validate user authentication before proceeding to checkout. On checkout, users are redirected to login/signup if not already signed in.
+
+7.12 UI Styling
+Used StyleSheet in React Native and followed the design from Figma to ensure pixel-perfect implementation. Styles are modularized for easier theme updates in the future.
