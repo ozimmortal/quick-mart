@@ -120,3 +120,38 @@ Accessible Fonts and Contrast: Offers readability and usability for people with 
 This section guides the foundation of Quick Mart’s interface design and user experience decisions.
 
 
+5. Development Approach
+Development of Quick Mart is on a mobile-first agile methodology, which ensures rapid prototyping, iterative feedback, and continuous improvement. This section provides an overview of the planning and execution strategy adopted while developing the app.
+
+5.1 Agile Methodology
+Development was structured in sprints with each iteration focused on releasing a functional chunk of the app (i.e., login screen, discover flow, cart logic). regular stand-ups and review sessions enabled feedback integration at an early point and ensured that all were on the same page.
+
+           5.1.1 Justification for Choosing Agile
+
+The Agile methodology was selected for Quick Mart due to its flexibility, speed of delivery, and incremental nature, which fits well into the rapidly changing environment of mobile app development.
+
+ Agile allowed the development team to:
+Quickly adapt to design and functionality feedback from early user interactions.
+Iteratively develop features such as gesture handling, navigation, and user account flows in manageable sprints.
+Promote collaboration among design and development teams, especially through tools like Figma and Git for version control.
+Realize a Minimum Viable Product (MVP) quickly and plan for further enhancements based on actual user needs and market feedback.
+
+5.2 Collaborative Design-Development Loop
+The design and development teams worked closely, using Figma for UI prototypes and React Native for implementation. Real-time collaboration ensured that what was designed was accurately translated into code.
+
+5.3 Component-Based Architecture
+React Native components were organized modularly, allowing for reuse across the app (e.g., button styles, card displays, tab navigation). This approach improved maintainability and scalability.
+
+5.4 Code Management
+Version control was managed with Git and GitHub, using feature, fix, and release branching models. Pull requests were reviewed as code before merging, to have clean, documented code.
+
+5.5 Continuous Testing
+Each build was tested on multiple devices and emulators using both manual and automated test scripts to ensure stable releases during each sprint.
+
+5.6 Justification for Choosing Agile
+The Agile approach was selected for Quick Mart due to its flexibility, speed of delivery, and iterative nature, which works well with the mobile app development dynamic nature. Agile allowed the development team to:
+Quickly adapt to design and functionality feedback from early user interactions.
+
+Iteratively develop features such as gesture handling, navigation, and user account flows in manageable sprints.
+Foster collaboration between design and development teams, especially via Figma and Git version control usage.
+Launch an MVP quickly and iterate afterward based on actual user needs and market feedback.
