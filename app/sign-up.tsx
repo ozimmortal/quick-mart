@@ -16,7 +16,11 @@ export default function SignUpScreen() {
       if (!userSession) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        await AsyncStorage.setItem("userSession", JSON.stringify(user));
+        await AsyncStorage.setItem("userSession", JSON.stringify({
+          displayName: user.displayName,
+          email: user.email,
+          url:user.photoURL 
+        }));
         console.log("User signed up:", user);
         router.push('/');
       }

@@ -2,62 +2,83 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'rea
 import { Settings, CreditCard, Package, Heart, Bell, CircleHelp as HelpCircle, LogOut, LogIn } from 'lucide-react-native';
 import { router } from 'expo-router';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 
 const MENU_ITEMS = [
-  { icon: Settings, label: 'Settings', color: '#4A90E2',url:'../settings' },
-  { icon: Package, label: 'Orders', color: '#FF8C00', url:'../orders'},
-  { icon: HelpCircle, label: 'Help & Support', color: '#34495E', url:'../help' },
+  { icon: Settings, label: 'Settings', color: '#4A90E2', url  : '../settings' },
+  { icon: Package, label: 'Orders', color: '#FF8C00', url: '../orders' },
+  { icon: HelpCircle, label: 'Help & Support', color: '#34495E', url: '../help' },
 ];
 
 export default function ProfileScreen() {
   const [login, setLogin] = useState(false);
-  const [userSession, setUserSession] = useState(null);
-
-  useEffect(() => {
-    const getUserSession = async () => {
-      try {
-        const user = await AsyncStorage.getItem("userSession");
-        if (user) {
-          setLogin(true);
-          setUserSession(JSON.parse(user));
+  const [refreshCount, setRefreshCount] = useState(0);
+  const [userSession, setUserSession] = useState<{
+    displayName?: string;
+    email?: string;
+    url?: string;
+  } | null>(null);
+  const getUserSession = async () => {
+    try {
+      const user = await AsyncStorage.getItem("userSession");
+      if (user) {
+        setLogin(true);
+        const parsedUser = JSON.parse(user);
+        setUserSession(parsedUser);
+        
+        // If no photoURL exists, set a default one
+        if (!parsedUser.url) {
+          setUserSession({
+            ...parsedUser,
+            photoURL: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1000'
+          });
         }
-        console.log("User session:", user);
-      } catch (error) {
-        console.error("Sign-in error:", error?.message );
       }
-    };
+    } catch (error) {
+      console.error("Error getting user session:", error);
+    }
+  };
+  useEffect(() => {
+    
 
     getUserSession();
-  }, []); // ✅ Fix: Added dependency array to prevent infinite loops
-
-  // ✅ Handle Logout
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getUserSession();
+    }, [])
+  );
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userSession");
       setLogin(false);
       setUserSession(null);
-      router.push('/sign-up'); // Redirect to login screen
+      router.push('/sign-up');
     } catch (error) {
-      console.error("Logout error:", error?.message);
+      console.error("Logout error:", error);
     }
   };
 
-  if (login) {
+  if (login && userSession) {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Image
-            source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1000' }}
+            source={{ uri: userSession.url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1000' }}
             style={styles.avatar}
           />
-          <Text style={styles.name}>{userSession?.displayName  || "John Doe"}</Text>
-          <Text style={styles.email}>{userSession?.email}</Text>
+          <Text style={styles.name}>{userSession.displayName || "John Doe"}</Text>
+          <Text style={styles.email}>{userSession.email || "user@example.com"}</Text>
         </View>
 
         <View style={styles.menuContainer}>
           {MENU_ITEMS.map((item, index) => (
-            <TouchableOpacity key={index} style={styles.menuItem} onPress={() => router.push(item.url)}>
+            <TouchableOpacity 
+              key={index} 
+              style={styles.menuItem} 
+              onPress={() => router.push(item.url)}
+            >
               <View style={[styles.iconContainer, { backgroundColor: `${item.color}15` }]}>
                 <item.icon size={24} color={item.color} />
               </View>
@@ -66,7 +87,6 @@ export default function ProfileScreen() {
           ))}
         </View>
 
-        {/* ✅ Logout Button Fixed */}
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <LogOut size={24} color="#FF385C" />
           <Text style={styles.logoutText}>Log Out</Text>
@@ -76,9 +96,9 @@ export default function ProfileScreen() {
   } else {
     return (
       <View style={styles.containerIn}>
-        <TouchableOpacity style={styles.logoutButton} onPress={() => router.push('/sign-up')}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => router.push('/sign-up')}>
           <LogIn size={24} color="#38FF60" />
-          <Text style={styles.logoutText}>Log In</Text>
+          <Text style={styles.loginText}>Log In</Text>
         </TouchableOpacity>
       </View>
     );
@@ -157,6 +177,20 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 16,
     color: '#FF385C',
+    fontWeight: '600',
+  },
+  loginButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#F0FFF4',
+    borderRadius: 12,
+  },
+  loginText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: '#38FF60',
     fontWeight: '600',
   },
 });

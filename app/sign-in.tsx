@@ -5,6 +5,7 @@ import { auth } from '@/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MoveLeft } from 'lucide-react-native';
+import { url } from 'inspector';
 
 export default function SignInScreen() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,11 @@ export default function SignInScreen() {
       const user = userCredential.user;
       const userSession = await AsyncStorage.getItem("userSession");
       if (!userSession) {
-        await AsyncStorage.setItem("userSession", JSON.stringify(user));   
+        await AsyncStorage.setItem("userSession", JSON.stringify({
+          displayName: user.displayName,
+          email: user.email,
+          url:user.photoURL 
+        }));
       }
       console.log("User signed in:", user);
       router.push('/');
