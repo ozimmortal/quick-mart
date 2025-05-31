@@ -27,10 +27,6 @@ https://github.com/user-attachments/assets/8986a8e9-1c4a-408f-8d27-d4941646a80c
 
 
 
-Uploading 4_5897772829427898095 (1).mp4…
-
-
-
 ## Documentation 
 
    [mobile - app documentation.docx](https://github.com/user-attachments/files/20037670/mobile.-.app.documentation.docx)
