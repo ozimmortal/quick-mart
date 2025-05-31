@@ -1,6 +1,6 @@
 
 
-Uploading 4_5897772829427898095 (1).mp4…
+https://github.com/user-attachments/assets/8986a8e9-1c4a-408f-8d27-d4941646a80c
 
 # Welcome to QuickMart 🛒
 
@@ -22,9 +22,13 @@ Uploading 4_5897772829427898095 (1).mp4…
    ```bash
     pnpm expo start
    ```
-## Example
+## Show Case 
 
-https://github.com/user-attachments/assets/c878b202-8d46-4f17-aa4a-74a52b7135c7
+
+
+
+Uploading 4_5897772829427898095 (1).mp4…
+
 
 
 ## Documentation 
